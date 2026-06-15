@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadrado Negro — Cardápio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--p:#0a0a0a;--r:#C8180A;--w:#F5F0E8;--g:#1a1a1a;--g2:#2a2a2a;--a:#E8D5B0}
+body{background:var(--p);color:var(--w);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+.hero{position:relative;padding:60px 40px 40px;border-bottom:4px solid var(--r);overflow:hidden}
+.hero-geo{position:absolute;top:0;right:0;width:220px;height:220px;background:var(--r);clip-path:polygon(100% 0,100% 100%,0 0)}
+.hero-geo2{position:absolute;bottom:-30px;left:60px;width:80px;height:80px;border:6px solid var(--r)}
+.bar-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,12vw,110px);letter-spacing:6px;line-height:.9;position:relative;z-index:1}
+.bar-name span{color:var(--r);display:block}
+.bar-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--a);margin-top:16px;text-transform:uppercase;position:relative;z-index:1}
+.bar-sub::before{content:'';display:inline-block;width:30px;height:2px;background:var(--r);vertical-align:middle;margin-right:10px}
+.divider{display:flex;height:8px;overflow:hidden}
+.dr{background:var(--r);flex:3}.dw{background:var(--w);flex:1}
+.nav{background:var(--g);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #333;position:sticky;top:0;z-index:100}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#555;padding:16px 24px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .2s,border-color .2s}
+.nav-btn.on,.nav-btn:hover{color:var(--w);border-bottom-color:var(--r)}
+.section{display:none;padding:40px;animation:fadeIn .3s ease}.section.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec-header{display:flex;align-items:flex-end;gap:20px;margin-bottom:32px}
+.sec-sq{width:20px;height:20px;background:var(--r);flex-shrink:0;margin-bottom:8px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;line-height:1}
+.sec-line{flex:1;height:1px;background:#333;margin-bottom:12px}
+.items-grid{display:grid;gap:2px}
+.item{background:var(--g);display:grid;grid-template-columns:1fr auto;align-items:start;padding:20px 24px;position:relative;overflow:hidden;transition:background .15s}
+.item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--r);transform:scaleY(0);transition:transform .2s;transform-origin:bottom}
+.item:hover::before{transform:scaleY(1)}.item:hover{background:var(--g2)}
+.item-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.5px;color:var(--w);margin-bottom:4px}
+.item-desc{font-size:12px;color:#888;line-height:1.5;max-width:480px}
+.item-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;background:var(--r);color:var(--w);padding:2px 8px;margin-top:8px;margin-right:4px}
+.item-tag.b{background:transparent;border:1px solid #444;color:#777}
+.item-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--a);white-space:nowrap;padding-left:24px}
+.item-vol{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#555;text-align:right;margin-top:4px}
+.cat-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--r);text-transform:uppercase;margin:28px 0 10px}
+.geo-row{display:flex;gap:6px;margin:32px 0 20px;align-items:center}
+.gsq{width:14px;height:14px;background:var(--r)}.gsq.sm{width:8px;height:8px}.gsq.wh{background:var(--w)}.gline{height:1px;background:#333;flex:1}
+.footer{background:var(--g);border-top:4px solid var(--p);padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.footer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--r);margin-bottom:12px}
+.footer-text{font-size:12px;color:#666;line-height:1.8}
+.footer-manifesto{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#444;line-height:2;border-left:2px solid var(--r);padding-left:16px;font-style:italic}
+.footer-bottom{background:var(--p);border-top:1px solid #1a1a1a;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:#2a2a2a}
+.footer-info{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#333;letter-spacing:2px}
+@media(max-width:600px){
+  .hero{padding:40px 24px 32px}.hero-geo{width:120px;height:120px}
+  .section{padding:24px}
+  .footer{grid-template-columns:1fr;gap:24px}
+  .footer-bottom{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-geo"></div>
+  <div class="hero-geo2"></div>
+  <div class="bar-name">Quadrado<br><span>Negro</span></div>
+  <p class="bar-sub">Bar Suprematista · Est. 1915 · Москва</p>
+</div>
+
+<div class="divider">
+  <div class="dr"></div><div class="dw" style="flex:.5"></div>
+  <div class="dr" style="flex:1"></div><div class="dw" style="flex:.2"></div>
+  <div class="dr" style="flex:4"></div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn on" onclick="show('vodkas',this)">Vodkas</button>
+  <button class="nav-btn" onclick="show('coqueteis',this)">Coquetéis</button>
+  <button class="nav-btn" onclick="show('vinhos',this)">Vinhos</button>
+  <button class="nav-btn" onclick="show('cervejas',this)">Cervejas</button>
+  <button class="nav-btn" onclick="show('naoalc',this)">Sem Álcool</button>
+  <button class="nav-btn" onclick="show('petiscos',this)">Petiscos</button>
+</nav>
+
+<div class="section on" id="vodkas">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Vodkas</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Puras</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Stolichnaya Premium</div><div class="item-desc">A vodka clássica soviética, filtrada em carvão de bétula. Suave, limpa e sem compromisso.</div><span class="item-tag">CLÁSSICA</span></div><div><div class="item-price">R$ 22</div><div class="item-vol">50 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Beluga Noble</div><div class="item-desc">Destilada com água artesiana da Sibéria. Cristalina, textura sedosa e final longo.</div><span class="item-tag">PREMIUM</span></div><div><div class="item-price">R$ 38</div><div class="item-vol">50 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Russian Standard Original</div><div class="item-desc">Formulada segundo os padrões originais do governo imperial russo de 1894.</div><span class="item-tag b">HISTÓRICA</span></div><div><div class="item-price">R$ 18</div><div class="item-vol">50 ml</div></div></div>
+  </div>
+  <div class="geo-row"><div class="gsq sm"></div><div class="gline"></div><div class="gsq wh sm"></div></div>
+  <p class="cat-label">— Infusionadas</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Pertsovka</div><div class="item-desc">Vodka russa infusionada com pimenta preta e malagueta. Aquece como o inverno de Moscou.</div><span class="item-tag">PICANTE</span></div><div><div class="item-price">R$ 24</div><div class="item-vol">50 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Medovukha</div><div class="item-desc">Tradição eslava — vodka com mel de flores silvestres e especiarias. Levemente adocicada.</div><span class="item-tag b">TRADICIONAL</span></div><div><div class="item-price">R$ 26</div><div class="item-vol">50 ml</div></div></div>
+  </div>
+</div>
+
+<div class="section" id="coqueteis">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Coquetéis</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Autorais Suprematistas</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Quadrado Vermelho</div><div class="item-desc">Vodka Stoli, romã, limão siciliano, xarope de hibisco, gelo. Cor intensa, sabor geométrico.</div><span class="item-tag">ASSINATURA</span></div><div><div class="item-price">R$ 42</div><div class="item-vol">200 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Branco sobre Branco</div><div class="item-desc">Vodka Beluga, licor de lichias, espuma de coco, tônica premium. Minimalista como Malevich.</div><span class="item-tag">ASSINATURA</span></div><div><div class="item-price">R$ 48</div><div class="item-vol">220 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Forma Negra</div><div class="item-desc">Vodka, carvão ativado, limão preto persa, mel, gengibre. Escuro como a tela de 1915.</div><span class="item-tag">DARK</span></div><div><div class="item-price">R$ 46</div><div class="item-vol">200 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Diagonal Russa</div><div class="item-desc">Vodka com beterraba, maçã verde, hortelã e espuma de limão. Dinâmica como a composição.</div><span class="item-tag b">ESPECIAL</span></div><div><div class="item-price">R$ 44</div><div class="item-vol">210 ml</div></div></div>
+  </div>
+  <div class="geo-row"><div class="gsq"></div><div class="gsq sm wh"></div><div class="gline"></div></div>
+  <p class="cat-label">— Clássicos Russos</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Moscow Mule</div><div class="item-desc">Vodka, cerveja de gengibre, limão e hortelã fresca. Servido na caneca de cobre.</div><span class="item-tag b">CLÁSSICO</span></div><div><div class="item-price">R$ 38</div><div class="item-vol">300 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Black Russian</div><div class="item-desc">Vodka e licor de café Kahlúa. Dois ingredientes, uma obra.</div><span class="item-tag b">CLÁSSICO</span></div><div><div class="item-price">R$ 36</div><div class="item-vol">150 ml</div></div></div>
+  </div>
+</div>
+
+<div class="section" id="vinhos">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Vinhos</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Georgianos e do Leste Europeu</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Rkatsiteli Âmbar</div><div class="item-desc">Vinho laranja georgiano fermentado 6 meses em ânforas de argila. Taninos, mel e damasco seco.</div><span class="item-tag">GEORGIANO</span><span class="item-tag b">LARANJA</span></div><div><div class="item-price">R$ 52</div><div class="item-vol">150 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Saperavi Tinto</div><div class="item-desc">Uva nativa georgiana, cor rubi intensa. Frutas escuras, especiarias e taninos firmes.</div><span class="item-tag">GEORGIANO</span></div><div><div class="item-price">R$ 48</div><div class="item-vol">150 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Tokaji Seco — Hungria</div><div class="item-desc">Vinho branco do Leste Europeu. Mineral, cítrico e elegante. Favorito dos czares.</div><span class="item-tag b">HÚNGARO</span></div><div><div class="item-price">R$ 44</div><div class="item-vol">150 ml</div></div></div>
+  </div>
+</div>
+
+<div class="section" id="cervejas">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Cervejas</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Russas e do Leste</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Baltika Nº 3</div><div class="item-desc">A lager mais popular da Rússia. Dourada, leve, refrescante. São Petersburgo desde 1990.</div><span class="item-tag b">LAGER</span></div><div><div class="item-price">R$ 18</div><div class="item-vol">350 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Baltika Nº 9 — Forte</div><div class="item-desc">Extra strong lager russa. 8% de teor alcoólico. Para construtivistas sérios.</div><span class="item-tag">FORTE</span></div><div><div class="item-price">R$ 22</div><div class="item-vol">350 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Okocim — Polônia</div><div class="item-desc">Cerveja premium polonesa. Malt encorpado, cevada nobre, amargor equilibrado.</div><span class="item-tag b">PILSNER</span></div><div><div class="item-price">R$ 20</div><div class="item-vol">350 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Stout Negra — Kvadrat House</div><div class="item-desc">Nossa stout artesanal. Preta como Malevich. Café, chocolate amargo, malte torrado.</div><span class="item-tag">ARTESANAL</span><span class="item-tag">EXCLUSIVA</span></div><div><div class="item-price">R$ 28</div><div class="item-vol">350 ml</div></div></div>
+  </div>
+</div>
+
+<div class="section" id="naoalc">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Sem Álcool</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Bebidas Russas Tradicionais</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Kvass Artesanal</div><div class="item-desc">Bebida fermentada russa de pão de centeio. Levemente efervescente, terra e malte.</div><span class="item-tag b">TRADICIONAL</span></div><div><div class="item-price">R$ 14</div><div class="item-vol">300 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Mors de Cranberry</div><div class="item-desc">Suco russo de frutas vermelhas silvestres com mel. Azedo, refrescante, ancestral.</div><span class="item-tag b">TRADICIONAL</span></div><div><div class="item-price">R$ 16</div><div class="item-vol">300 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Chá Preto Russo — Zavarka</div><div class="item-desc">Chá concentrado em samovar. Forte, escuro, com limão e açúcar cristal.</div><span class="item-tag b">QUENTE</span></div><div><div class="item-price">R$ 12</div><div class="item-vol">250 ml</div></div></div>
+  </div>
+  <div class="geo-row"><div class="gline"></div><div class="gsq wh sm"></div><div class="gsq sm"></div></div>
+  <p class="cat-label">— Drinks Autorais Sem Álcool</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Forma Branca</div><div class="item-desc">Água de coco, cúrcuma, gengibre, limão e espuma de clara. O minimalismo em copo.</div><span class="item-tag">AUTORAL</span></div><div><div class="item-price">R$ 22</div><div class="item-vol">200 ml</div></div></div>
+    <div class="item"><div><div class="item-name">Tônica Suprematista</div><div class="item-desc">Tônica artesanal com romã, beterraba e ervas secas. Visual vermelho intenso.</div><span class="item-tag">AUTORAL</span></div><div><div class="item-price">R$ 20</div><div class="item-vol">250 ml</div></div></div>
+  </div>
+</div>
+
+<div class="section" id="petiscos">
+  <div class="sec-header"><div class="sec-sq"></div><div class="sec-title">Petiscos</div><div class="sec-line"></div></div>
+  <p class="cat-label">— Zakuski — Entradas Russas</p>
+  <div class="items-grid">
+    <div class="item"><div><div class="item-name">Blini com Ikra</div><div class="item-desc">Panquecas de trigo-sarraceno com caviar vermelho (ikra) e creme azedo (smetana). Clássico imperial.</div><span class="item-tag">CLÁSSICO</span></div><div><div class="item-price">R$ 46</div><div class="item-vol">3 unid</div></div></div>
+    <div class="item"><div><div class="item-name">Seleção de Arenques</div><div class="item-desc">Três estilos: vodka e dill, mostarda mel, cebola caramelizada. Com pão preto de centeio.</div><span class="item-tag b">CURADO</span></div><div><div class="item-price">R$ 38</div><div class="item-vol">Porção</div></div></div>
+    <div class="item"><div><div class="item-name">Pelmeni Fritos</div><div class="item-desc">Dumplings russos fritos até dourar. Com creme azedo e ciboulette.</div><span class="item-tag">QUENTE</span></div><div><div class="item-price">R$ 34</div><div class="item-vol">8 unid</div></div></div>
+    <div class="item"><div><div class="item-name">Pão de Centeio com Manteigas</div><div class="item-desc">Pão negro russo com trio de manteigas: ervas e alho, mel e nozes, beterraba defumada.</div><span class="item-tag b">VEGETARIANO</span></div><div><div class="item-price">R$ 26</div><div class="item-vol">Porção</div></div></div>
+    <div class="item"><div><div class="item-name">Tábua Suprematista</div><div class="item-desc">Queijos, embutidos do leste europeu, picles artesanais, mostarda, pepino e pão preto. Para compartilhar.</div><span class="item-tag">PARA 2–4</span><span class="item-tag">DESTAQUE</span></div><div><div class="item-price">R$ 89</div><div class="item-vol">Tábua</div></div></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>
+    <div class="footer-title">O Bar</div>
+    <p class="footer-text">Quadrado Negro é um bar inspirado na vanguarda russa do início do século XX.<br><br>Nossa identidade visual segue os princípios do Suprematismo de Kazimir Malevich — formas puras, geometria essencial, ausência de ornamento. Apenas o necessário.<br><br>Nossas bebidas e petiscos trazem a cultura e a tradição gastronômica russa e do Leste Europeu.</p>
+  </div>
+  <div>
+    <div class="footer-title">Manifesto</div>
+    <p class="footer-manifesto">"O suprematismo é a supremacia<br>da sensação pura na arte criativa."<br>— Kazimir Malevich, 1915<br><br>Beba. Sinta. Sem ornamento.</p>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <div class="footer-logo">KVADRAT NEGRO</div>
+  <div class="footer-info">CARDÁPIO · 2025 · TODOS OS PREÇOS EM REAIS</div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
